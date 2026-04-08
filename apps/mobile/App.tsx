@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
-import axios from 'axios'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+
+import PhoneScreen from './src/features/auth/screens/PhoneScreen'
+import OtpScreen from './src/features/auth/screens/OtpScreen'
+
+const Stack = createNativeStackNavigator()
 
 export default function App() {
-  const [message, setMessage] = useState('Loading...')
-
-  useEffect(() => {
-    axios
-      .get('http://192.168.1.4:3001/hello') // ← replace with YOUR IP
-      .then((res) => setMessage(res.data.message))
-      .catch((err) => {
-        console.log(err)
-        setMessage('Error connecting to API')
-      })
-  }, [])
-
   return (
-    <View style={{ marginTop: 80, padding: 20 }}>
-      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
-        Mobile App
-      </Text>
-      <Text style={{ marginTop: 20 }}>{message}</Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Phone" component={PhoneScreen} />
+        <Stack.Screen name="Otp" component={OtpScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
